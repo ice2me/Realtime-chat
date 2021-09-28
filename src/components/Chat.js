@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {Avatar, Button, Container, Grid, TextField} from "@material-ui/core";
@@ -13,7 +13,9 @@ const Chat = () => {
 	const [messages, loading] = useCollectionData(
 		firestore.collection('messages').orderBy('createdAt')
 	)
+	const inputSend = (e) => {
 	
+	}
 	const sendMessage = async () => {
 		firestore.collection('messages').add({
 			uid: user.uid,
@@ -91,11 +93,13 @@ const Chat = () => {
 						autoComplete="off"
 						id="outlined-required"
 						variant={"outlined"}
-						defaultValue="white"
 						fullWidth
 						rowsMax={2}
 						value={value}
-						onChange={e => setValue(e.target.value)}
+						onChange={e => {
+							setValue(e.target.value)
+						}}
+						onClick={inputSend}
 						style={{
 							background: '#949494',
 							borderRadius: 8,
@@ -103,6 +107,11 @@ const Chat = () => {
 							fontWeight: 'bold'
 						}}
 						focused
+						onKeyPress={e => {
+							if (e.key === 'Enter') {
+								sendMessage()
+							}
+						}}
 					/>
 						<Button
 							style={{background: '#F50057', marginTop: '5px'}}
