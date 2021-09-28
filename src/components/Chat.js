@@ -46,10 +46,9 @@ const Chat = () => {
 				fontWeight: 'bold',
 				backgroundColor: '#0E1621'
 			}}>
-				
-				{messages.map(mes=>
+				{messages.map((mes, index)=>
 				<div
-					key={mes.uid}
+					key={Date.now()+index}
 					style={{
 						margin: '10px',
 						background: user.uid === mes.uid ? '#182533' : '#182533',
