@@ -13,7 +13,7 @@ const Chat = () => {
 	const [messages, loading] = useCollectionData(
 		firestore.collection('messages').orderBy('createdAt')
 	)
-	console.log(loading)
+	
 	const sendMessage = async () => {
 		firestore.collection('messages').add({
 			uid: user.uid,
@@ -29,17 +29,32 @@ const Chat = () => {
 		<Container>
 			<Grid
 				container
-				style={{height: window.innerHeight - 50, marginTop: '20px'}}
 				justifyContent={'center'}
+				style={{
+					height: window.innerHeight - 50,
+					marginTop: '20px'
+				}}
 			>
-			<div style={{width: '88%', height: '58vh', border: '2px solid #999', overflowY: 'auto', borderRadius: 8}}>
+			<div style={{width: '88%',
+				height: '58vh',
+				border: '2px solid #999',
+				borderRadius: 8,
+				overflowY: 'auto',
+				color: '#fff',
+				fontWeight: 'bold',
+				backgroundColor: '#0E1621'
+			}}>
+				
 				{messages.map(mes=>
-				<div style={{
-					margin: '10px',
-					border: user.uid === messages.uid ? '2px solid green' : '2px solid blue',
-					marginLeft: user.uid === messages.uid ? 'auto' : '10px',
-					width: 'fit-content',
-					padding: 10
+				<div
+					key={mes.uid}
+					style={{
+						margin: '10px',
+						background: user.uid === mes.uid ? '#182533' : '#182533',
+						marginLeft: user.uid === mes.uid ? 'auto' : '10px',
+						width: 'fit-content',
+						padding: 15,
+						borderRadius: 8,
 				}}>
 					<Grid
 						container
@@ -51,28 +66,53 @@ const Chat = () => {
 					<div style={{marginTop: 10, padding: "0 10px"}}>{mes.text}</div>
 				</div>
 				)}
+				
 			</div>
-			<Grid
-				container
-				direction={'column'}
-				alignItems={"flex-end"}
-				style={{width: '80%'}}
+			<div
+				style={{
+					width: '100%',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center'
+				}}
 			>
-			<TextField
-				variant={"outlined"}
-				fullWidth
-				rowsMax={2}
-				value={value}
-				onChange={e => setValue(e.target.value)}
-			/>
-				<Button
-					style={{background: '#F50057', marginTop: '5px'}}
-					variant={'outlined'}
-					onClick={sendMessage}
-				>
-					Send
-				</Button>
-			</Grid>
+				<Grid
+					container
+					direction={'column'}
+					alignItems={"flex-end"}
+					color="white"
+					style={{
+						width: '70%',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center'
+					}}>
+					<TextField
+						autoComplete="off"
+						id="outlined-required"
+						variant={"outlined"}
+						defaultValue="white"
+						fullWidth
+						rowsMax={2}
+						value={value}
+						onChange={e => setValue(e.target.value)}
+						style={{
+							background: '#949494',
+							borderRadius: 8,
+							color: "white",
+							fontWeight: 'bold'
+						}}
+						focused
+					/>
+						<Button
+							style={{background: '#F50057', marginTop: '5px'}}
+							variant={'outlined'}
+							onClick={sendMessage}
+						>
+							Send
+						</Button>
+				</Grid>
+			</div>
 			
 			</Grid>
 		</Container>
