@@ -13,9 +13,7 @@ const Chat = () => {
 	const [messages, loading] = useCollectionData(
 		firestore.collection('messages').orderBy('createdAt')
 	)
-	const inputSend = (e) => {
-	
-	}
+
 	const sendMessage = async () => {
 		firestore.collection('messages').add({
 			uid: user.uid,
@@ -26,7 +24,9 @@ const Chat = () => {
 		})
 		setValue('')
 	}
-	if(loading) {return <Loader />}
+	if (loading) {
+		return <Loader />
+	}
 	return (
 		<Container>
 			<Grid
@@ -47,27 +47,26 @@ const Chat = () => {
 				backgroundColor: '#0E1621'
 			}}>
 				{messages.map((mes, index)=>
-				<div
-					key={Date.now()+index}
-					style={{
+					<div
+						key={Date.now()+index}
+						style={{
 						margin: '10px',
 						background: user.uid === mes.uid ? '#182533' : '#182533',
 						marginLeft: user.uid === mes.uid ? 'auto' : '10px',
 						width: 'fit-content',
 						padding: 15,
 						borderRadius: 8,
-				}}>
-					<Grid
+					}}>
+						<Grid
 						container
 						alignItems={"center"}
-					>
+						>
 						<Avatar src={mes.photoURL}/>
 						<div style={{marginLeft: 10}}>{mes.displayName}</div>
-					</Grid>
-					<div style={{marginTop: 10, padding: "0 10px"}}>{mes.text}</div>
-				</div>
+						</Grid>
+						<div style={{marginTop: 10, padding: "0 10px"}}>{mes.text}</div>
+					</div>
 				)}
-				
 			</div>
 			<div
 				style={{
@@ -98,7 +97,6 @@ const Chat = () => {
 						onChange={e => {
 							setValue(e.target.value)
 						}}
-						onClick={inputSend}
 						style={{
 							background: '#949494',
 							borderRadius: 8,
